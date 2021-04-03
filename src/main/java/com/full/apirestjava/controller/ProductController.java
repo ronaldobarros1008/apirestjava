@@ -33,4 +33,45 @@ public class ProductController {
 	public List<Product> getAllProducts(){
 		return productRepository.findAll();
 	}
+	
+	// create products rest api
+	@PostMapping("/products")
+	public Product createProduct(@RequestBody Product product) {
+		return productRepository.save(product);
+	}
+	
+	// get products by id rest api
+	@GetMapping("/products/{id}")
+	public ResponseEntity<Product> getProductsById(@PathVariable Long id) {
+		Product products = productRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Product not exist with id :" + id));
+		return ResponseEntity.ok(products);
+	}
+	
+	// update product rest api
+	@PutMapping("/products/{id}")
+	public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody Product productDetails){
+		Product product = productRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Product not exist with id :" + id));
+			
+		product.setName(productDetails.getName());
+		product.setDescription(productDetails.getDescription());
+		product.setPrice(productDetails.getPrice());
+		product.setAmount(productDetails.getAmount());
+			
+		Product updateProduct = productRepository.save(product);
+		return ResponseEntity.ok(updateProduct);
+	}
+	
+	// delete product rest api
+	@DeleteMapping("/products/{id}")
+	public ResponseEntity<Map<String, Boolean>> deleteProduct(@PathVariable Long id){
+		Product product = productRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Product not exist with id :" + id));
+			
+		productRepository.delete(product);
+		Map<String, Boolean> response = new HashMap<>();
+		response.put("deleted", Boolean.TRUE);
+		return ResponseEntity.ok(response);
+	}	
 }
