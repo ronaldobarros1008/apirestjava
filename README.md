@@ -6,3 +6,5 @@ API para a prova de seleção Java_PL_III
 2 - É nenessário a criação do banco de dados no **MySql** executando a query `CREATE database cadastro default collate utf8_general_ci;`
 
 3 - Nesta api foi implementado o **Swagger** após "subir" a mesma acesso-o através da url (http://localhost:8080/swagger-ui.html#/) 
+
+4 - Esta api esta sendo usada no projeto angular que pode ser acessado pela url(https://github.com/ronaldobarros1008/simpleCrudInAngular)
