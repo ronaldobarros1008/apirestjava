@@ -20,27 +20,34 @@ import com.full.apirestjava.exception.ResourceNotFoundException;
 import com.full.apirestjava.model.Product;
 import com.full.apirestjava.repository.ProductRepository;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @CrossOrigin(origins="*")
 @RestController
 @RequestMapping("/api/v1/")
+@Api(value="API REST Produtos")
 public class ProductController {
 
 	@Autowired
 	private ProductRepository productRepository;
 	
 	//get all products
+	@ApiOperation(value="Retorna uma lista de Produtos")
 	@GetMapping("/products")
 	public List<Product> getAllProducts(){
 		return productRepository.findAll();
 	}
 	
 	// create products rest api
+	@ApiOperation(value="Cria um produto")
 	@PostMapping("/products")
 	public Product createProduct(@RequestBody Product product) {
 		return productRepository.save(product);
 	}
 	
 	// get products by id rest api
+	@ApiOperation(value="Retorna um produto unico")
 	@GetMapping("/products/{id}")
 	public ResponseEntity<Product> getProductsById(@PathVariable Long id) {
 		Product products = productRepository.findById(id)
@@ -49,6 +56,7 @@ public class ProductController {
 	}
 	
 	// update product rest api
+	@ApiOperation(value="Atualiza um produto")
 	@PutMapping("/products/{id}")
 	public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody Product productDetails){
 		Product product = productRepository.findById(id)
@@ -64,6 +72,7 @@ public class ProductController {
 	}
 	
 	// delete product rest api
+	@ApiOperation(value="Deleta um produto")
 	@DeleteMapping("/products/{id}")
 	public ResponseEntity<Map<String, Boolean>> deleteProduct(@PathVariable Long id){
 		Product product = productRepository.findById(id)
